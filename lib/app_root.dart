@@ -22,7 +22,7 @@ class AppRoot extends StatelessWidget {
             navigatorKey: AppContext.navigatorKey,
 
             /// Sets the title of the application.
-            title: 'Clicks Technician',
+            title: 'Fixly',
             builder: (context, child) {
               return MediaQuery.withClampedTextScaling(
                 minScaleFactor: 1.0,
