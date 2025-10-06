@@ -1,4 +1,7 @@
-import './screens/auth/login/login_screen.dart';
+import 'package:fixly/screens/home/home_screen.dart';
+import 'package:fixly/screens/splash/splash_screen.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 
 class AppRoot extends StatelessWidget {
@@ -6,7 +9,10 @@ class AppRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: kDebugMode ? HomeScreen() : SplashScreen(),
+    );
   }
 }
 //

@@ -1,4 +1,6 @@
 import 'package:fixly/core/app_colors.dart';
+import 'package:fixly/core/app_extras.dart';
+import 'package:fixly/screens/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -52,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return;
     }
     if (_formKey.currentState?.validate() ?? false) {
-      // Create account logic here
+      context.goOffAll(LoginScreen());
     }
   }
 
