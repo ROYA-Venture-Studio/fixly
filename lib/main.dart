@@ -16,10 +16,10 @@ void main() async {
     ),
   );
   runApp(
-    AppRoot(),
-    // DevicePreview(
-    //   enabled: !kReleaseMode,
-    //   builder: (context) => AppRoot(), // Wrap your app
-    // ),
+    // AppRoot(),
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => AppRoot(), // Wrap your app
+    ),
   );
 }
