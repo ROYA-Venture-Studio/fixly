@@ -1,5 +1,8 @@
 import 'package:fixly/core/app_colors.dart';
 import 'package:fixly/core/app_extras.dart';
+import 'package:fixly/screens/categories/categories_screen.dart';
+import 'package:fixly/screens/notifications/notifications_screen.dart';
+import 'package:fixly/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -51,15 +54,20 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(14),
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: kPurple.withOpacity(0.2), width: 2),
+          InkWell(
+            onTap: () {
+              context.goTo(NotificationsScreen());
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: kPurple.withOpacity(0.2), width: 2),
+                ),
+                child: SvgPicture.asset("assets/icons/notification-bing.svg"),
               ),
-              child: SvgPicture.asset("assets/icons/notification-bing.svg"),
             ),
           ),
         ],
@@ -72,28 +80,36 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _buildSearchBar(),
+              child: _buildSearchBar(context),
             ),
             SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _buildCategorySection(),
+              child: _buildCategorySection(context),
             ),
             SizedBox(height: 24),
             // _buildHeroPromoCard(),
             CarouselSlider(
               options: CarouselOptions(
                 height: 150,
-                viewportFraction: .92,
+                viewportFraction: 0.9,
+
                 autoPlay: true,
               ),
               items:
                   [1, 2, 3].map((i) {
                     return Builder(
                       builder: (BuildContext context) {
-                        return Image.asset(
-                          "assets/images/slider_home.png",
-                          fit: BoxFit.fill,
+                        return Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(
+                              "assets/images/slider_home.png",
+                              fit: BoxFit.fill,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                          ),
                         );
                       },
                     );
@@ -116,26 +132,13 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: _BottomNavBar(),
-      floatingActionButton: CircleAvatar(
-        radius: 32,
-        backgroundColor: kAccentYellow,
-        child: SvgPicture.asset("assets/icons/call_nav.svg"),
-      ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: kAccentYellow,
-      //   elevation: 6,
-      //   child: Icon(Icons.wb_sunny_outlined, color: Colors.white, size: 28),
-      //   onPressed: () {},
-      // ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(BuildContext context) {
     return InkWell(
       onTap: () {
-        print("Tapped");
+        context.goTo(SearchScreen());
       },
       child: Container(
         height: 54,
@@ -170,7 +173,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCategorySection() {
+  Widget _buildCategorySection(BuildContext context) {
     final categories = [
       {'icon': "assets/icons/cleaning.svg", 'label': "Cleaning"},
       {'icon': "assets/icons/electrical.svg", 'label': "Electrical"},
@@ -187,7 +190,9 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                context.goTo(CategoriesScreen());
+              },
               style: TextButton.styleFrom(padding: EdgeInsets.zero),
               child: Text(
                 'View All',
@@ -208,22 +213,35 @@ class HomeScreen extends StatelessWidget {
           ),
           itemCount: 3,
           itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.all(8),
-              padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Color(0xffFAFAFA),
-                border: Border.all(color: Color(0xffEEEEEE)),
-              ),
-              child: Column(
-                spacing: 12,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SvgPicture.asset(categories[index]["icon"].toString()),
-                  Text(categories[index]["label"].toString()),
-                ],
+            return InkWell(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder:
+                        (_) => CategoryDetailsScreen(
+                          selectedCategory:
+                              categories[index]['label'].toString(),
+                        ),
+                  ),
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.all(8),
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Color(0xffFAFAFA),
+                  border: Border.all(color: Color(0xffEEEEEE)),
+                ),
+                child: Column(
+                  spacing: 12,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SvgPicture.asset(categories[index]["icon"].toString()),
+                    Text(categories[index]["label"].toString()),
+                  ],
+                ),
               ),
             );
           },
@@ -385,60 +403,6 @@ class HomeScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-/// Custom Bottom Navigation Bar with FAB notch
-class _BottomNavBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BottomAppBar(
-      notchMargin: 8,
-      shape: const CircularNotchedRectangle(),
-      color: Colors.white,
-      elevation: 16,
-      child: SizedBox(
-        height: 68,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildNavItem("assets/icons/home_nav.svg", 'Home', true),
-            _buildNavItem("assets/icons/booking_nav.svg", 'Bookings', false),
-            SizedBox(width: 56), // Central FAB space
-            _buildNavItem("assets/icons/payments_nav.svg", 'Payments', false),
-            _buildNavItem("assets/icons/menu_nav.svg", 'Menu', false),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(String icon, String label, bool selected) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {},
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SvgPicture.asset(
-              icon,
-              colorFilter: ColorFilter.mode(
-                selected ? primaryColor : kPurpleGray,
-                BlendMode.srcIn,
-              ),
-            ),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: selected ? FontWeight.w700 : FontWeight.w400,
-                color: selected ? primaryColor : kPurpleGray,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
