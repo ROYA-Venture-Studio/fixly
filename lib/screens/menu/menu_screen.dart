@@ -1,4 +1,5 @@
 import 'package:fixly/core/app_extras.dart';
+import 'package:fixly/screens/addresses/addresses_screen.dart';
 import 'package:fixly/screens/personalInfromation/personal_information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -99,7 +100,13 @@ class MenuScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          buildMenuTile("assets/icons/book.svg", "Address Book"),
+          buildMenuTile(
+            "assets/icons/book.svg",
+            "Address Book",
+            onTap: () {
+              context.goTo(AddressesScreen());
+            },
+          ),
           buildMenuTile("assets/icons/card.svg", "Saved Cards"),
           buildMenuTile("assets/icons/save-2.svg", "Saved Technicians"),
           SizedBox(height: 18),
@@ -125,7 +132,12 @@ class MenuScreen extends StatelessWidget {
     );
   }
 
-  Widget buildMenuTile(String icon, String label, {String? value}) {
+  Widget buildMenuTile(
+    String icon,
+    String label, {
+    String? value,
+    void Function()? onTap,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: ListTile(
@@ -137,7 +149,7 @@ class MenuScreen extends StatelessWidget {
                 : null,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         tileColor: Color(0xFFF9F8FC),
-        onTap: () {},
+        onTap: onTap,
       ),
     );
   }
