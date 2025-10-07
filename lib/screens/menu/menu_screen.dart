@@ -1,6 +1,11 @@
 import 'package:fixly/core/app_extras.dart';
 import 'package:fixly/screens/addresses/addresses_screen.dart';
+import 'package:fixly/screens/cards/cards_screen.dart';
+import 'package:fixly/screens/help/help_screen.dart';
+import 'package:fixly/screens/language/languages_screen.dart';
 import 'package:fixly/screens/personalInfromation/personal_information_screen.dart';
+import 'package:fixly/screens/savedTechnicians/saved_technicians_screen.dart';
+import 'package:fixly/screens/talkToUs/talk_to_us_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -107,8 +112,20 @@ class MenuScreen extends StatelessWidget {
               context.goTo(AddressesScreen());
             },
           ),
-          buildMenuTile("assets/icons/card.svg", "Saved Cards"),
-          buildMenuTile("assets/icons/save-2.svg", "Saved Technicians"),
+          buildMenuTile(
+            "assets/icons/card.svg",
+            "Saved Cards",
+            onTap: () {
+              context.goTo(MyCardsScreen());
+            },
+          ),
+          buildMenuTile(
+            "assets/icons/save-2.svg",
+            "Saved Technicians",
+            onTap: () {
+              context.goTo(SavedTechniciansScreen());
+            },
+          ),
           SizedBox(height: 18),
           // Settings Section
           Text(
@@ -123,9 +140,24 @@ class MenuScreen extends StatelessWidget {
             "assets/icons/global.svg",
             "Language",
             value: "English",
+            onTap: () {
+              context.goTo(LanguagesScreen());
+            },
           ),
-          buildMenuTile("assets/icons/message-question.svg", "Help"),
-          buildMenuTile("assets/icons/message-2.svg", "Talk to us"),
+          buildMenuTile(
+            "assets/icons/message-question.svg",
+            "Help",
+            onTap: () {
+              context.goTo(HelpScreen());
+            },
+          ),
+          buildMenuTile(
+            "assets/icons/message-2.svg",
+            "Talk to us",
+            onTap: () {
+              context.goTo(TalkToUsScreen());
+            },
+          ),
           buildMenuTile("assets/icons/logout.svg", "Logout"),
         ],
       ),
