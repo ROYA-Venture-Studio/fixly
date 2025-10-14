@@ -2,9 +2,10 @@ import 'package:fixly/core/app_colors.dart';
 import 'package:fixly/core/app_extras.dart';
 import 'package:fixly/screens/auth/forgetPassword/forget_password_screen.dart';
 import 'package:fixly/screens/auth/register/register_screen.dart';
-import 'package:fixly/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../main/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -183,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      context.goOffAll(HomeScreen());
+                      context.goOffAll(MainScreen());
                     }
                   },
                   style: ElevatedButton.styleFrom(

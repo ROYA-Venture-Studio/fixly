@@ -1,4 +1,6 @@
 import 'package:fixly/core/app_colors.dart';
+import 'package:fixly/core/app_extras.dart';
+import 'package:fixly/screens/categories/service_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -431,93 +433,101 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
     required String reviews,
     bool isPopular = false,
   }) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: Color(0xffEEEEEE)),
-      ),
-      elevation: 0,
-      color: Color(0xffFAFAFA),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(4.0), // Padding للصورة نفسها
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      image,
-                      width: double.infinity,
-                      height: 96,
-                      fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        context.goTo(ServiceDetailsScreen());
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: Color(0xffEEEEEE)),
+        ),
+        elevation: 0,
+        color: Color(0xffFAFAFA),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(4.0), // Padding للصورة نفسها
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset(
+                        image,
+                        width: double.infinity,
+                        height: 96,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                if (isPopular)
-                  Positioned(
-                    left: 16,
-                    top: 16,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 239, 223),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        "Popular",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 235, 138, 33),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
+                  if (isPopular)
+                    Positioned(
+                      left: 16,
+                      top: 16,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 255, 239, 223),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          "Popular",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 235, 138, 33),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-              ],
-            ),
-            SizedBox(height: 8),
-            Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: Colors.black,
+                ],
               ),
-            ),
-            SizedBox(height: 2),
-            Row(
-              children: [
-                Icon(Icons.star, size: 15, color: kAccentYellow),
-                SizedBox(width: 2),
-                Text(rating, style: TextStyle(fontSize: 13, color: kPurple)),
-                SizedBox(width: 2),
-                Text(
-                  '| $reviews reviews',
-                  style: TextStyle(fontSize: 12, color: kPurpleGray),
+              SizedBox(height: 8),
+              Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Colors.black,
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  price,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
-                    color: kPurple,
+              ),
+              SizedBox(height: 2),
+              Row(
+                children: [
+                  Icon(Icons.star, size: 15, color: kAccentYellow),
+                  SizedBox(width: 2),
+                  Text(rating, style: TextStyle(fontSize: 13, color: kPurple)),
+                  SizedBox(width: 2),
+                  Text(
+                    '| $reviews reviews',
+                    style: TextStyle(fontSize: 12, color: kPurpleGray),
                   ),
-                ),
-                Spacer(),
-                Icon(Icons.bookmark_border, color: kPurpleGray, size: 21),
-              ],
-            ),
-          ],
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    price,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                      color: kPurple,
+                    ),
+                  ),
+                  Spacer(),
+                  Icon(Icons.bookmark_border, color: kPurpleGray, size: 21),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
